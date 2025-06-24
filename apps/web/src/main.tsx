@@ -5,7 +5,12 @@ import './index.css';
 import App from './app/App.tsx';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { SidebarProvider, SidebarTrigger, ThemeProvider } from '@repo/ui';
+import {
+  Label,
+  SidebarProvider,
+  SidebarTrigger,
+  ThemeProvider,
+} from '@repo/ui';
 import { AppSidebar } from './app/app-sidebar.tsx';
 
 createRoot(document.getElementById('root')!).render(
@@ -13,10 +18,15 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider defaultTheme="system">
       <SidebarProvider>
         <AppSidebar />
-        <>
-          <SidebarTrigger />
-          <App />
-        </>
+        <div className="flex flex-col flex-1 gap-2 p-2">
+          <div className="flex items-center">
+            <SidebarTrigger />
+            <Label>Markdown Editor</Label>
+          </div>
+          <div className="flex flex-1">
+            <App />
+          </div>
+        </div>
       </SidebarProvider>
     </ThemeProvider>
   </StrictMode>

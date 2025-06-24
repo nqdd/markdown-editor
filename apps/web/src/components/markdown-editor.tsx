@@ -23,6 +23,11 @@ export const MarkdownEditor = () => {
   };
 
   return (
-    <BlockNoteView editor={editor} theme={editorTheme} onChange={onChange} />
+    <BlockNoteView
+      className="w-full h-full"
+      editor={editor}
+      theme={editorTheme}
+      onChange={onChange}
+    />
   );
 };

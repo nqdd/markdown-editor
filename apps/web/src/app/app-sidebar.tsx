@@ -3,21 +3,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  Label,
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  Switch,
-  useTheme,
 } from '@repo/ui';
 import { ChevronDown } from '@repo/ui/icons';
 
 export function AppSidebar() {
-  const { theme, setTheme } = useTheme();
-
   return (
     <Sidebar className="flex-col justify-between">
       <SidebarHeader>
@@ -42,19 +38,8 @@ export function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent className="p-4">
-        <div className="flex gap-4">
-          <Switch
-            id="theme-mode"
-            onCheckedChange={() => {
-              setTheme(theme !== 'light' ? 'light' : 'dark');
-            }}
-          />
-          <Label htmlFor="theme-mode">
-            {theme.substring(0, 1).toUpperCase() + theme.substring(1)}
-          </Label>
-        </div>
-      </SidebarContent>
+      <SidebarContent className="p-4"></SidebarContent>
+      <SidebarFooter></SidebarFooter>
     </Sidebar>
   );
 }
