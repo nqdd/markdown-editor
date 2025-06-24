@@ -1,7 +1,11 @@
+import { MarkdownEditor } from '../components/markdown-editor';
+import { Toolbar } from '../components/toolbar';
+
 function App() {
   return (
-    <div className="flex w-full h-screen items-center justify-center">
-      App content
+    <div className="flex-col gap-4 w-full h-screen p-4">
+      <Toolbar />
+      <MarkdownEditor />
     </div>
   );
 }

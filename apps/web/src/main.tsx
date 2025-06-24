@@ -1,9 +1,12 @@
+import '@blocknote/core/fonts/inter.css';
+import '@blocknote/shadcn/style.css';
 import './index.css';
+
 import App from './app/App.tsx';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SidebarProvider, SidebarTrigger, ThemeProvider } from '@repo/ui';
-import { AppSidebar } from './app/AppSideBar.tsx';
+import { AppSidebar } from './app/app-sidebar.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
