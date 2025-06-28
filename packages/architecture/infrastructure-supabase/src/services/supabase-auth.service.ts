@@ -1,5 +1,5 @@
-import { Factory } from '@repo/di/container';
-import {
+import type { Factory } from '@repo/di/container';
+import type {
   AuthService,
   LoginWithEmailPasswordInput,
   LoginOutput,
@@ -8,7 +8,6 @@ import {
 } from '@repo/domain/services/auth.service';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { tAuthRedirectUrl, tSupabaseClient } from '../supabase-client';
-
 export const createSupabaseAuthService: Factory<AuthService> = (container) => {
   const client = container.resolve(tSupabaseClient);
   const redirectUrl = container.resolve(tAuthRedirectUrl);
@@ -65,8 +64,8 @@ export class SupabaseAuthService implements AuthService {
   }
 
   async handleOAuthCallback(
-    provider: OAuthProvider,
-    code: string
+    _provider: OAuthProvider,
+    _code: string
   ): Promise<LoginOutput> {
     // Supabase handles OAuth callbacks automatically through redirects
     // This method would be used to exchange the code for a token if needed
@@ -91,7 +90,7 @@ export class SupabaseAuthService implements AuthService {
     };
   }
 
-  async logout(accessToken: string): Promise<void> {
+  async logout(_accessToken: string): Promise<void> {
     const { error } = await this.client.auth.signOut();
 
     if (error) {

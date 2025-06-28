@@ -9,7 +9,10 @@
   ],
   "exports": {
     "./styles.css": "./dist/index.css",
-    ".": "./dist/index.js",
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
     "./icons": "./dist/icons/index.js"
   },
   "license": "MIT",

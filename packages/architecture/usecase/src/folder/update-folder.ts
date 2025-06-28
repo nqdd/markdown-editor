@@ -1,4 +1,4 @@
-import { Factory } from '@repo/di/container';
+import type { Factory } from '@repo/di/container';
 import { createToken } from '@repo/di/create-token';
 import { FolderEntity } from '@repo/domain/entities/folder.entity';
 import {
@@ -6,7 +6,6 @@ import {
   tFolderRepository,
 } from '@repo/domain/repositories/folder.repository';
 import { z } from 'zod';
-
 export const updateFolderInputSchema = z.object({
   id: z.string().uuid(),
   name: z.string().min(1).optional(),

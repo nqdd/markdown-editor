@@ -1,15 +1,16 @@
-import { Factory } from '@repo/di/container';
+import type { Factory } from '@repo/di/container';
 import { createToken } from '@repo/di/create-token';
-import {
+import type {
   AuthService,
   LoginWithOAuthInput,
   OAuthProvider,
   LoginOutput,
+} from '@repo/domain/services/auth.service';
+import {
   loginWithOAuthInputSchema,
   loginOutputSchema,
   tAuthService,
 } from '@repo/domain/services/auth.service';
-
 export const tGetOAuthLoginUrlUseCase = createToken<GetOAuthLoginUrlUseCase>(
   'GET_OAUTH_LOGIN_URL_USE_CASE'
 );
@@ -32,7 +33,11 @@ export const tHandleOAuthCallbackUseCase =
   createToken<HandleOAuthCallbackUseCase>('HANDLE_OAUTH_CALLBACK_USE_CASE');
 
 export class GetOAuthLoginUrlUseCase {
-  constructor(private authService: AuthService) {}
+  private authService: AuthService;
+
+  constructor(authService: AuthService) {
+    this.authService = authService;
+  }
 
   async execute(input: LoginWithOAuthInput): Promise<string> {
     const validatedInput = loginWithOAuthInputSchema.parse(input);
@@ -42,7 +47,11 @@ export class GetOAuthLoginUrlUseCase {
 }
 
 export class HandleOAuthCallbackUseCase {
-  constructor(private authService: AuthService) {}
+  private authService: AuthService;
+
+  constructor(authService: AuthService) {
+    this.authService = authService;
+  }
 
   async execute(provider: OAuthProvider, code: string): Promise<LoginOutput> {
     const result = await this.authService.handleOAuthCallback(provider, code);

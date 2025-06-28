@@ -1,5 +1,5 @@
 import z from 'zod';
-import { primitive, unbranded } from './zod-traits';
+import type { primitive, unbranded } from './zod-traits';
 
 export const documentEntitySchema = z
   .object({

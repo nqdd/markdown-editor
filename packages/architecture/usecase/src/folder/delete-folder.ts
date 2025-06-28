@@ -1,10 +1,9 @@
-import { Factory } from '@repo/di/container';
+import type { Factory } from '@repo/di/container';
 import { createToken } from '@repo/di/create-token';
 import {
   FolderRepository,
   tFolderRepository,
 } from '@repo/domain/repositories/folder.repository';
-
 export const tDeleteFolderUseCase = createToken<DeleteFolderUseCase>(
   'DELETE_FOLDER_USE_CASE'
 );

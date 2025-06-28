@@ -2,7 +2,7 @@ import {
   FolderEntity,
   parseFolderEntity,
 } from '@repo/domain/entities/folder.entity';
-import { FolderRepository } from '@repo/domain/repositories/folder.repository';
+import type { FolderRepository } from '@repo/domain/repositories/folder.repository';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { DependencyContainer } from '@repo/di/container';
 import { tSupabaseClient } from '../supabase-client';
@@ -15,7 +15,11 @@ export const createSupabaseFolderRepository = (
 };
 
 export class SupabaseFolderRepository implements FolderRepository {
-  constructor(private readonly supabaseClient: SupabaseClient) {}
+  private readonly supabaseClient: SupabaseClient;
+
+  constructor(supabaseClient: SupabaseClient) {
+    this.supabaseClient = supabaseClient;
+  }
 
   async getById(id: string): Promise<FolderEntity | null> {
     const { data, error } = await this.supabaseClient

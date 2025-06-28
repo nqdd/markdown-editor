@@ -2,7 +2,7 @@ import {
   VaultEntity,
   parseVaultEntity,
 } from '@repo/domain/entities/vault.entity';
-import { VaultRepository } from '@repo/domain/repositories/vault.repository';
+import type { VaultRepository } from '@repo/domain/repositories/vault.repository';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { DependencyContainer } from '@repo/di/container';
 import { tSupabaseClient } from '../supabase-client';
@@ -15,7 +15,11 @@ export const createSupabaseVaultRepository = (
 };
 
 export class SupabaseVaultRepository implements VaultRepository {
-  constructor(private readonly supabaseClient: SupabaseClient) {}
+  private readonly supabaseClient: SupabaseClient;
+
+  constructor(supabaseClient: SupabaseClient) {
+    this.supabaseClient = supabaseClient;
+  }
 
   async getById(id: string): Promise<VaultEntity | null> {
     const { data, error } = await this.supabaseClient

@@ -1,4 +1,4 @@
-import { UserRepository } from '@repo/domain/repositories/user.repository';
+import type { UserRepository } from '@repo/domain/repositories/user.repository';
 import { UserEntity, parseUserEntity } from '@repo/domain/entities/user.entity';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { DependencyContainer } from '@repo/di/container';
@@ -12,7 +12,11 @@ export const createSupabaseUserRepository = (
 };
 
 export class SupabaseUserRepository implements UserRepository {
-  constructor(private client: SupabaseClient) {}
+  private readonly client: SupabaseClient;
+
+  constructor(client: SupabaseClient) {
+    this.client = client;
+  }
 
   async getByEmail(email: string): Promise<UserEntity | null> {
     const { data, error } = await this.client

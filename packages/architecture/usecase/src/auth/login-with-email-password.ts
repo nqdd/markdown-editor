@@ -1,4 +1,4 @@
-import { Factory } from '@repo/di/container';
+import type { Factory } from '@repo/di/container';
 import { createToken } from '@repo/di/create-token';
 import {
   AuthService,
@@ -8,7 +8,6 @@ import {
   loginOutputSchema,
   tAuthService,
 } from '@repo/domain/services/auth.service';
-
 export const tLoginWithEmailPasswordUseCase =
   createToken<LoginWithEmailPasswordUseCase>(
     'LOGIN_WITH_EMAIL_PASSWORD_USE_CASE'

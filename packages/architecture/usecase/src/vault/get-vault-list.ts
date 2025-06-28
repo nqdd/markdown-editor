@@ -1,11 +1,8 @@
-import { Factory } from '@repo/di/container';
+import type { Factory } from '@repo/di/container';
 import { createToken } from '@repo/di/create-token';
 import { VaultEntity } from '@repo/domain/entities/vault.entity';
-import {
-  VaultRepository,
-  tVaultRepository,
-} from '@repo/domain/repositories/vault.repository';
-
+import type { VaultRepository } from '@repo/domain/repositories/vault.repository';
+import { tVaultRepository } from '@repo/domain/repositories/vault.repository';
 export const tGetVaultListUseCase = createToken<GetVaultListUseCase>(
   'GET_VAULT_LIST_USE_CASE'
 );

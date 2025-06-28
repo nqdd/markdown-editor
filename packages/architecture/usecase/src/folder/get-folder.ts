@@ -1,11 +1,10 @@
-import { Factory } from '@repo/di/container';
+import type { Factory } from '@repo/di/container';
 import { createToken } from '@repo/di/create-token';
 import { FolderEntity } from '@repo/domain/entities/folder.entity';
 import {
   FolderRepository,
   tFolderRepository,
 } from '@repo/domain/repositories/folder.repository';
-
 export const tGetFolderUseCase = createToken<GetFolderUseCase>(
   'GET_FOLDER_USE_CASE'
 );

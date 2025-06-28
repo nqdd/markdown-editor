@@ -1,13 +1,10 @@
-import { Factory } from '@repo/di/container';
+import type { Factory } from '@repo/di/container';
 import { createToken } from '@repo/di/create-token';
 import { VaultEntity } from '@repo/domain/entities/vault.entity';
-import {
-  VaultRepository,
-  tVaultRepository,
-} from '@repo/domain/repositories/vault.repository';
+import type { VaultRepository } from '@repo/domain/repositories/vault.repository';
+import { tVaultRepository } from '@repo/domain/repositories/vault.repository';
 import z from 'zod';
 import { v4 as uuidv4 } from 'uuid';
-
 // Input schema for creating a vault
 export const createVaultInputSchema = z.object({
   name: z.string().min(1),
@@ -28,7 +25,11 @@ export const createCreateVaultUseCase: Factory<CreateVaultUseCase> = (
 };
 
 export class CreateVaultUseCase {
-  constructor(private vaultRepository: VaultRepository) {}
+  private vaultRepository: VaultRepository;
+
+  constructor(vaultRepository: VaultRepository) {
+    this.vaultRepository = vaultRepository;
+  }
 
   async execute(input: CreateVaultInput): Promise<VaultEntity> {
     const validatedInput = createVaultInputSchema.parse(input);
