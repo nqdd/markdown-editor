@@ -1,27 +1,11 @@
 {
-  "extends": "@repo/typescript-config/react-library.json",
+  "extends": "@repo/typescript-config/react-library",
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "jsx": "react-jsx",
-    "forceConsistentCasingInFileNames": true,
-    "types": ["react", "node"],
     "declaration": true,
     "declarationMap": true,
-    "esModuleInterop": true,
-    "incremental": false,
-    "isolatedModules": true,
-    "lib": ["es2022", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "moduleDetection": "force",
-    "moduleResolution": "bundler",
-    "noUncheckedIndexedAccess": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "ES2022",
-    "emitDeclarationOnly": false,
-    "verbatimModuleSyntax": false
+    "emitDeclarationOnly": false
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
