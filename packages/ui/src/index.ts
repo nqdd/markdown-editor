@@ -10,3 +10,4 @@ export * from './components/switch';
 export * from './components/tooltip';
 export * from './components/dropdown-menu';
 export * from './components/avatar';
+export * from './components/dialog';
