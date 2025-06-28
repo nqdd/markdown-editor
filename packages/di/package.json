@@ -1,0 +1,21 @@
+{
+  "name": "@repo/di",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./src/*.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit --skipLibCheck",
+    "lint": "eslint src --max-warnings 0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "@repo/eslint-config": "*",
+    "typescript": "5.8.2"
+  }
+}

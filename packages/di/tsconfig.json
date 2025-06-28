@@ -1,0 +1,13 @@
+{
+  "extends": "@repo/typescript-config/base",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@repo/di/*": ["./*"]
+    },
+    "composite": true
+  },
+  "include": ["./src/*.ts", "./src/**/*.ts"]
+}
