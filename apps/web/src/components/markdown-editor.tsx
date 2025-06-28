@@ -3,10 +3,21 @@ import { useCreateBlockNote } from '@blocknote/react';
 import { useTheme } from '@repo/ui';
 import { useMemo } from 'react';
 
-export const MarkdownEditor = () => {
+interface MarkdownEditorProps {
+  initialContent?: string;
+}
+
+export const MarkdownEditor = ({ initialContent }: MarkdownEditorProps) => {
   const { theme } = useTheme();
 
-  const editor = useCreateBlockNote();
+  const editor = useCreateBlockNote({
+    initialContent: initialContent ? [
+      {
+        type: "paragraph",
+        content: initialContent
+      }
+    ] : undefined
+  });
 
   const editorTheme = useMemo(() => {
     if (theme === 'system') {
