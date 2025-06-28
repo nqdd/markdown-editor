@@ -34,9 +34,10 @@ export class SupabaseFolderRepository implements FolderRepository {
         name: data.name,
         userId: data.user_id,
         parentId: data.parent_id || undefined,
+        vaultId: data.vault_id || undefined,
         createdAt: new Date(data.created_at),
-        updatedAt: data.updated_at ? new Date(data.updated_at) : undefined,
-        deletedAt: data.deleted_at ? new Date(data.deleted_at) : undefined,
+        updatedAt: data.updated_at ? new Date(data.updated_at) : new Date(),
+        deletedAt: data.deleted_at ? new Date(data.deleted_at) : new Date(),
       });
     } catch (e) {
       console.error('Error parsing folder entity:', e);
@@ -63,9 +64,10 @@ export class SupabaseFolderRepository implements FolderRepository {
             name: item.name,
             userId: item.user_id,
             parentId: item.parent_id || undefined,
+            vaultId: item.vault_id || undefined,
             createdAt: new Date(item.created_at),
-            updatedAt: item.updated_at ? new Date(item.updated_at) : undefined,
-            deletedAt: item.deleted_at ? new Date(item.deleted_at) : undefined,
+            updatedAt: item.updated_at ? new Date(item.updated_at) : new Date(),
+            deletedAt: item.deleted_at ? new Date(item.deleted_at) : new Date(),
           });
         } catch (e) {
           console.error('Error parsing folder entity:', e);
@@ -81,6 +83,7 @@ export class SupabaseFolderRepository implements FolderRepository {
       name: folder.name,
       user_id: folder.userId,
       parent_id: folder.parentId || null,
+      vault_id: folder.vaultId || null,
       created_at: folder.createdAt.toISOString(),
       updated_at: folder.updatedAt?.toISOString(),
       deleted_at: folder.deletedAt?.toISOString(),
@@ -98,6 +101,7 @@ export class SupabaseFolderRepository implements FolderRepository {
       .update({
         name: folder.name,
         parent_id: folder.parentId || null,
+        vault_id: folder.vaultId || null,
         updated_at: new Date().toISOString(),
       })
       .eq('id', folder.id);

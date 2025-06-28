@@ -11,6 +11,7 @@ import {
   tHandleOAuthCallbackUseCase,
 } from './auth/login-with-oauth';
 import { registerFolderUseCases } from './folder/register';
+import { registerVaultUseCases } from './vault/register';
 
 export function registerUseCases(container: DependencyContainer): void {
   container.register(
@@ -25,4 +26,7 @@ export function registerUseCases(container: DependencyContainer): void {
 
   // Register folder use cases
   registerFolderUseCases(container);
+  
+  // Register vault use cases
+  registerVaultUseCases(container);
 }

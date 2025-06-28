@@ -5,6 +5,8 @@ import { createSupabaseUserRepository } from './repositories/supabase-user.repos
 import { tUserRepository } from '@repo/domain/repositories/user.repository';
 import { createSupabaseFolderRepository } from './repositories/supabase-folder.repository';
 import { tFolderRepository } from '@repo/domain/repositories/folder.repository';
+import { createSupabaseVaultRepository } from './repositories/supabase-vault.repository';
+import { tVaultRepository } from '@repo/domain/repositories/vault.repository';
 import {
   createSupabaseClient,
   tAuthRedirectUrl,
@@ -28,4 +30,5 @@ export function registerInfrastructureSupabase(
   container.register(tAuthService, createSupabaseAuthService);
   container.register(tUserRepository, createSupabaseUserRepository);
   container.register(tFolderRepository, createSupabaseFolderRepository);
+  container.register(tVaultRepository, createSupabaseVaultRepository);
 }
