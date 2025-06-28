@@ -64,9 +64,10 @@ export class SupabaseAuthService implements AuthService {
   }
 
   async handleOAuthCallback(
-    _provider: OAuthProvider,
-    _code: string
+    provider: OAuthProvider,
+    code: string
   ): Promise<LoginOutput> {
+    console.log('handleOAuthCallback', provider, code);
     // Supabase handles OAuth callbacks automatically through redirects
     // This method would be used to exchange the code for a token if needed
     // For Supabase, we can get the session after the redirect completes
@@ -90,7 +91,7 @@ export class SupabaseAuthService implements AuthService {
     };
   }
 
-  async logout(_accessToken: string): Promise<void> {
+  async logout(): Promise<void> {
     const { error } = await this.client.auth.signOut();
 
     if (error) {
