@@ -2,19 +2,19 @@ export type Factory<T> = (container: DependencyContainer) => T;
 
 export type Token<T> = symbol & { __type: T };
 
-class DependencyContainer {
-  private instance!: DependencyContainer;
+export class DependencyContainer {
+  private static instance: DependencyContainer;
 
   private factories: Map<Token<unknown>, Factory<unknown>> = new Map();
   private instances: Map<Factory<unknown>, unknown> = new Map();
 
   private constructor() {}
 
-  public getInstance(): DependencyContainer {
-    if (!this.instance) {
-      this.instance = new DependencyContainer();
+  public static getInstance(): DependencyContainer {
+    if (!DependencyContainer.instance) {
+      DependencyContainer.instance = new DependencyContainer();
     }
-    return this.instance;
+    return DependencyContainer.instance;
   }
 
   public register<T>(token: Token<T>, factory: Factory<T>): void {

@@ -3,11 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "exports": {
-    ".": "./src/*.ts"
+    "./*": [
+      "./src/*.ts"
+    ]
   },
   "scripts": {
     "check-types": "tsc --noEmit --skipLibCheck",
