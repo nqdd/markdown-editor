@@ -5,24 +5,32 @@
 -- This is just for local development and testing
 INSERT INTO auth.users (id, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 VALUES 
-  ('d0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', 'test@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz012345', NOW(), NOW(), NOW()),
-  ('e1c6340a-9b57-4a75-a5a4-45d9c9be2cdd', 'demo@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz012345', NOW(), NOW(), NOW())
+  ('d0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', 'test@example.com', '$2a$10$6JlZm82HcsB3HekpAruO/enMyMSWLPRneq4Y2xJYstMYWlg3Bh0yy', NOW(), NOW(), NOW()),
+  ('e1c6340a-9b57-4a75-a5a4-45d9c9be2cdd', 'demo@example.com', '$2a$10$6JlZm82HcsB3HekpAruO/enMyMSWLPRneq4Y2xJYstMYWlg3Bh0yy', NOW(), NOW(), NOW())
+ON CONFLICT (id) DO NOTHING;
+
+-- Seed vaults (MOVED UP before folders)
+INSERT INTO vaults (id, name, user_id, created_at, updated_at)
+VALUES
+  ('aaaaaaaa-0000-0000-0000-000000000000', 'Personal', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NOW(), NOW()),
+  ('bbbbbbbb-0000-0000-0000-000000000000', 'Company', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NOW(), NOW()),
+  ('cccccccc-0000-0000-0000-000000000000', 'Notes', 'e1c6340a-9b57-4a75-a5a4-45d9c9be2cdd', NOW(), NOW())
 ON CONFLICT (id) DO NOTHING;
 
 -- Seed folders
-INSERT INTO folders (id, name, user_id, parent_id, created_at, updated_at)
+INSERT INTO folders (id, name, user_id, parent_id, vault_id, created_at, updated_at)
 VALUES
   -- Root folders
-  ('11111111-1111-1111-1111-111111111111', 'Personal', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NULL, NOW(), NOW()),
-  ('22222222-2222-2222-2222-222222222222', 'Work', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NULL, NOW(), NOW()),
-  ('33333333-3333-3333-3333-333333333333', 'Projects', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NULL, NOW(), NOW()),
-  ('44444444-4444-4444-4444-444444444444', 'Notes', 'e1c6340a-9b57-4a75-a5a4-45d9c9be2cdd', NULL, NOW(), NOW()),
+  ('11111111-1111-1111-1111-111111111111', 'Personal', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NULL, 'aaaaaaaa-0000-0000-0000-000000000000', NOW(), NOW()),
+  ('22222222-2222-2222-2222-222222222222', 'Work', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NULL, 'bbbbbbbb-0000-0000-0000-000000000000', NOW(), NOW()),
+  ('33333333-3333-3333-3333-333333333333', 'Projects', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NULL, 'aaaaaaaa-0000-0000-0000-000000000000', NOW(), NOW()),
+  ('44444444-4444-4444-4444-444444444444', 'Notes', 'e1c6340a-9b57-4a75-a5a4-45d9c9be2cdd', NULL, 'cccccccc-0000-0000-0000-000000000000', NOW(), NOW()),
   
   -- Subfolders
-  ('55555555-5555-5555-5555-555555555555', 'Journal', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', '11111111-1111-1111-1111-111111111111', NOW(), NOW()),
-  ('66666666-6666-6666-6666-666666666666', 'Recipes', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', '11111111-1111-1111-1111-111111111111', NOW(), NOW()),
-  ('77777777-7777-7777-7777-777777777777', 'Meetings', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', '22222222-2222-2222-2222-222222222222', NOW(), NOW()),
-  ('88888888-8888-8888-8888-888888888888', 'Ideas', 'e1c6340a-9b57-4a75-a5a4-45d9c9be2cdd', '44444444-4444-4444-4444-444444444444', NOW(), NOW())
+  ('55555555-5555-5555-5555-555555555555', 'Journal', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', '11111111-1111-1111-1111-111111111111', 'aaaaaaaa-0000-0000-0000-000000000000', NOW(), NOW()),
+  ('66666666-6666-6666-6666-666666666666', 'Recipes', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', '11111111-1111-1111-1111-111111111111', 'aaaaaaaa-0000-0000-0000-000000000000', NOW(), NOW()),
+  ('77777777-7777-7777-7777-777777777777', 'Meetings', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', '22222222-2222-2222-2222-222222222222', 'bbbbbbbb-0000-0000-0000-000000000000', NOW(), NOW()),
+  ('88888888-8888-8888-8888-888888888888', 'Ideas', 'e1c6340a-9b57-4a75-a5a4-45d9c9be2cdd', '44444444-4444-4444-4444-444444444444', 'cccccccc-0000-0000-0000-000000000000', NOW(), NOW())
 ON CONFLICT (id) DO NOTHING;
 
 -- Seed documents
@@ -98,3 +106,12 @@ VALUES
   ('d0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', 'light', 16, 1.5, true, NOW(), NOW()),
   ('e1c6340a-9b57-4a75-a5a4-45d9c9be2cdd', 'dark', 18, 1.8, true, NOW(), NOW())
 ON CONFLICT (user_id) DO NOTHING;
+
+
+-- Seed vaults
+INSERT INTO vaults (id, name, user_id, created_at, updated_at)
+VALUES
+  ('aaaaaaaa-0000-0000-0000-000000000000', 'Personal', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NOW(), NOW()),
+  ('bbbbbbbb-0000-0000-0000-000000000000', 'Company', 'd0c5340a-9b57-4a75-a5a4-45d9c9be2ccc', NOW(), NOW()),
+  ('cccccccc-0000-0000-0000-000000000000', 'Notes', 'e1c6340a-9b57-4a75-a5a4-45d9c9be2cdd', NOW(), NOW())
+ON CONFLICT (id) DO NOTHING;
