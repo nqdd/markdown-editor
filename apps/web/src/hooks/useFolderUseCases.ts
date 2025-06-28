@@ -6,6 +6,7 @@ import { useDependencyContainer } from './useDependencyContainer';
 import type { FolderEntity } from '@repo/domain/entities/folder.entity';
 import { tGetFolderUseCase } from '@repo/usecase/folder/get-folder';
 import { tGetFolderListUseCase } from '@repo/usecase/folder/get-folder-list';
+import { useAuthContext } from '../providers/auth-provider';
 
 export type Folder = FolderEntity;
 export type CreateFolderData = Omit<CreateFolderInput, 'userId'>;
@@ -15,11 +16,15 @@ export function useFolderUseCases() {
   const createFolderUseCase = container.resolve(tCreateFolderUseCase);
   const getFolderUseCase = container.resolve(tGetFolderUseCase);
   const getFolderListUseCase = container.resolve(tGetFolderListUseCase);
+  const { user } = useAuthContext();
 
-  // Get the current user ID (this would come from your auth system)
+  // Get the current user ID from the auth context
   const getCurrentUserId = () => {
-    // This is a placeholder - replace with your actual user ID retrieval logic
-    return '00000000-0000-0000-0000-000000000000'; // Default user ID for now
+    if (!user) {
+      // Default user ID as fallback
+      return '00000000-0000-0000-0000-000000000000';
+    }
+    return user.id;
   };
 
   return {
