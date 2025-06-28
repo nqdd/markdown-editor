@@ -7,11 +7,14 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@repo/ui';
 import { router } from './router.tsx';
+import { DependencyContainerProvider } from './providers/dependency-container.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="system">
-      <RouterProvider router={router} />
+      <DependencyContainerProvider>
+        <RouterProvider router={router} />
+      </DependencyContainerProvider>
     </ThemeProvider>
   </StrictMode>
 );

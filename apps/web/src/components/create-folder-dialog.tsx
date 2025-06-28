@@ -11,9 +11,9 @@ import {
   Label,
 } from '@repo/ui';
 import {
-  folderService,
+  useFolderUseCases,
   type CreateFolderData,
-} from '../services/folder-service';
+} from '../hooks/useFolderUseCases';
 
 interface CreateFolderDialogProps {
   isOpen: boolean;
@@ -31,6 +31,7 @@ export function CreateFolderDialog({
   const [folderName, setFolderName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { createFolder } = useFolderUseCases();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,10 +46,10 @@ export function CreateFolderDialog({
       setIsLoading(true);
       const folderData: CreateFolderData = {
         name: folderName.trim(),
-        parent_id: parentId,
+        parentId: parentId || undefined,
       };
 
-      await folderService.createFolder(folderData);
+      await createFolder(folderData);
       setFolderName('');
       onOpenChange(false);
       if (onFolderCreated) {

@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FolderLayout } from '../../layouts/folder-layout.tsx';
 import { MarkdownEditor } from '../../components/markdown-editor.tsx';
-import { folderService, type Folder } from '../../services/folder-service';
+import {
+  useFolderUseCases,
+  type Folder,
+} from '../../hooks/useFolderUseCases.ts';
 
 export function FolderPage() {
   const { id } = useParams<{ id: string }>();
   const [folder, setFolder] = useState<Folder | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { getFolderById } = useFolderUseCases();
 
   useEffect(() => {
     const loadFolder = async () => {
@@ -18,8 +22,8 @@ export function FolderPage() {
         setLoading(true);
         setError(null);
 
-        // Get folder by ID using the folderService
-        const folder = await folderService.getFolderById(id);
+        // Get folder by ID using the folder use case
+        const folder = await getFolderById(id);
         setFolder(folder);
       } catch (err) {
         console.error('Error loading folder:', err);
@@ -30,7 +34,7 @@ export function FolderPage() {
     };
 
     loadFolder();
-  }, [id]);
+  }, [id, getFolderById]);
 
   if (loading) {
     return (

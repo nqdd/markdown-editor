@@ -2,7 +2,7 @@ import { MoreHorizontal, Trash2, Plus, ChevronDown, Folder, type LucideIcon } fr
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { folderService, type Folder as FolderType } from '../services/folder-service';
+import { useFolderUseCases, type Folder as FolderType } from '../hooks/useFolderUseCases';
 import { CreateFolderDialog } from './create-folder-dialog';
 
 import {
@@ -131,12 +131,13 @@ export function NavFolder({
   const [folders, setFolders] = useState<FolderItem[]>(initialFolders);
   const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { getAllFolders } = useFolderUseCases();
 
   // Load folders from Supabase
   const loadFolders = async () => {
     try {
       setIsLoading(true);
-      const supabaseFolders = await folderService.getAllFolders();
+      const supabaseFolders = await getAllFolders();
       
       // If we have folders from Supabase, merge them with the initial folders
       if (supabaseFolders.length > 0) {
@@ -145,7 +146,7 @@ export function NavFolder({
           name: folder.name,
           url: `/folders/${folder.id}`,
           icon: Folder,
-          parent_id: folder.parent_id
+          parent_id: folder.parentId
         }));
         
         // Combine with initial folders
