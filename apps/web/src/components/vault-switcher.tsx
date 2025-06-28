@@ -27,10 +27,10 @@ export function VaultSwitcher({
   onVaultCreated?: () => void;
 }) {
   const { isMobile } = useSidebar();
-  const [activeTeam, setActiveTeam] = React.useState(vaults[0]);
+  const [activeVault, setActiveVault] = React.useState(vaults[0]);
   const [isCreateVaultOpen, setIsCreateVaultOpen] = React.useState(false);
 
-  if (!activeTeam) {
+  if (!activeVault) {
     return null;
   }
 
@@ -45,11 +45,11 @@ export function VaultSwitcher({
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <activeTeam.logo className="size-4" />
+                  <activeVault.logo className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {activeTeam.name}
+                    {activeVault.name}
                   </span>
                 </div>
                 <ChevronsUpDown className="ml-auto" />
@@ -64,16 +64,16 @@ export function VaultSwitcher({
               <DropdownMenuLabel className="text-muted-foreground text-xs">
                 Vaults
               </DropdownMenuLabel>
-              {vaults.map((team, index) => (
+              {vaults.map((vault, index) => (
                 <DropdownMenuItem
-                  key={team.name}
-                  onClick={() => setActiveTeam(team)}
+                  key={vault.name}
+                  onClick={() => setActiveVault(vault)}
                   className="gap-2 p-2"
                 >
                   <div className="flex size-6 items-center justify-center rounded-md border">
-                    <team.logo className="size-3.5 shrink-0" />
+                    <vault.logo className="size-3.5 shrink-0" />
                   </div>
-                  {team.name}
+                  {vault.name}
                   <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
                 </DropdownMenuItem>
               ))}

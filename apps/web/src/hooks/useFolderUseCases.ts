@@ -7,6 +7,7 @@ import type { FolderEntity } from '@repo/domain/entities/folder.entity';
 import { tGetFolderUseCase } from '@repo/usecase/folder/get-folder';
 import { tGetFolderListUseCase } from '@repo/usecase/folder/get-folder-list';
 import { useAuthContext } from '../providers/auth-provider';
+import { useCallback } from 'react';
 
 export type Folder = FolderEntity;
 export type CreateFolderData = Omit<CreateFolderInput, 'userId'>;
@@ -18,27 +19,19 @@ export function useFolderUseCases() {
   const getFolderListUseCase = container.resolve(tGetFolderListUseCase);
   const { user } = useAuthContext();
 
-  // Get the current user ID from the auth context
-  const getCurrentUserId = () => {
-    if (!user) {
-      // Default user ID as fallback
-      return '00000000-0000-0000-0000-000000000000';
-    }
-    return user.id;
-  };
-
   return {
-    createFolder: async (data: CreateFolderData) => {
-      const userId = getCurrentUserId();
-      return createFolderUseCase.execute({
-        ...data,
-        userId,
-      });
-    },
+    createFolder: useCallback(
+      async (data: CreateFolderData) => {
+        return createFolderUseCase.execute({
+          ...data,
+          userId: user?.id!,
+        });
+      },
+      [user?.id]
+    ),
     getFolderById: (id: string) => getFolderUseCase.execute(id),
-    getAllFolders: () => {
-      const userId = getCurrentUserId();
-      return getFolderListUseCase.execute(userId);
-    },
+    getAllFolders: useCallback(async () => {
+      return getFolderListUseCase.execute(user?.id!);
+    }, [user?.id]),
   };
 }

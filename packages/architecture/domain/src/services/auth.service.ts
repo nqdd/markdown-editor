@@ -46,5 +46,5 @@ export interface AuthService {
     code: string
   ): Promise<LoginOutput>;
   logout(accessToken: string): Promise<void>;
-  getCurrentUser(accessToken: string): Promise<LoginOutput['user'] | null>;
+  getCurrentUser(): Promise<LoginOutput['user'] | null>;
 }

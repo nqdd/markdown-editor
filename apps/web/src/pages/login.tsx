@@ -1,19 +1,29 @@
 import { useState } from 'react';
 import { useAuthContext } from '../providers/auth-provider';
 import { Button, Input, Label } from '@repo/ui';
+import { Navigate } from 'react-router-dom';
 
 export function LoginPage() {
-  const { login, loginWithOAuth, error, loading } = useAuthContext();
+  const { login, loginWithOAuth, error, loading, isAuthenticated } =
+    useAuthContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  if (loading) {
+    return (
+      <div className="flex w-full h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await login(email, password);
-    } catch (error) {
-      // Error is handled in the auth hook
-    }
+    await login(email, password);
   };
 
   return (

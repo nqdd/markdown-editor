@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDependencyContainer } from './useDependencyContainer';
 import { tLoginWithEmailPasswordUseCase } from '@repo/usecase/auth/login-with-email-password';
 import {
@@ -35,11 +34,9 @@ export function useAuth() {
     tHandleOAuthCallbackUseCase
   );
 
-  const navigate = useNavigate();
-
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
-    accessToken: localStorage.getItem('accessToken'),
+    accessToken: null,
     loading: true,
     error: null,
   });
@@ -47,38 +44,27 @@ export function useAuth() {
   // Check if user is logged in on mount
   useEffect(() => {
     const checkAuth = async () => {
-      if (authState.accessToken) {
-        try {
-          // You would need to implement this method in your auth service
-          // to verify the token and get the current user
-          const user = await container
-            .resolve(tAuthService)
-            .getCurrentUser(authState.accessToken);
+      try {
+        // You would need to implement this method in your auth service
+        // to verify the token and get the current user
+        const user = await container.resolve(tAuthService).getCurrentUser();
 
-          if (user) {
-            setAuthState((prev) => ({
-              ...prev,
-              user,
-              loading: false,
-            }));
-            return;
-          }
-        } catch (error) {
-          console.error('Failed to validate token:', error);
-          localStorage.removeItem('accessToken');
-        }
+        setAuthState((prev) => ({
+          ...prev,
+          user,
+        }));
+      } catch (error) {
+        console.error('Failed to validate token:', error);
+      } finally {
+        setAuthState((prev) => ({
+          ...prev,
+          loading: false,
+        }));
       }
-
-      setAuthState((prev) => ({
-        ...prev,
-        user: null,
-        accessToken: null,
-        loading: false,
-      }));
     };
 
     checkAuth();
-  }, [container, authState.accessToken]);
+  }, []);
 
   const login = useCallback(
     async (email: string, password: string) => {
@@ -90,8 +76,6 @@ export function useAuth() {
           password,
         });
 
-        localStorage.setItem('accessToken', result.accessToken);
-
         setAuthState({
           user: result.user,
           accessToken: result.accessToken,
@@ -99,7 +83,6 @@ export function useAuth() {
           error: null,
         });
 
-        navigate('/');
         return result;
       } catch (error) {
         setAuthState((prev) => ({
@@ -110,7 +93,7 @@ export function useAuth() {
         throw error;
       }
     },
-    [loginWithEmailPasswordUseCase, navigate]
+    [loginWithEmailPasswordUseCase]
   );
 
   const loginWithOAuth = useCallback(
@@ -142,8 +125,6 @@ export function useAuth() {
       try {
         const result = await handleOAuthCallbackUseCase.execute(provider, code);
 
-        localStorage.setItem('accessToken', result.accessToken);
-
         setAuthState({
           user: result.user,
           accessToken: result.accessToken,
@@ -151,7 +132,6 @@ export function useAuth() {
           error: null,
         });
 
-        navigate('/');
         return result;
       } catch (error) {
         setAuthState((prev) => ({
@@ -165,7 +145,7 @@ export function useAuth() {
         throw error;
       }
     },
-    [handleOAuthCallbackUseCase, navigate]
+    [handleOAuthCallbackUseCase]
   );
 
   const logout = useCallback(async () => {
@@ -177,24 +157,20 @@ export function useAuth() {
       }
     }
 
-    localStorage.removeItem('accessToken');
-
     setAuthState({
       user: null,
       accessToken: null,
       loading: false,
       error: null,
     });
-
-    navigate('/login');
-  }, [container, authState.accessToken, navigate]);
+  }, [container, authState.accessToken]);
 
   return {
     user: authState.user,
     accessToken: authState.accessToken,
     loading: authState.loading,
     error: authState.error,
-    isAuthenticated: !!authState.user,
+    isAuthenticated: Boolean(authState.user?.id),
     login,
     loginWithOAuth,
     handleOAuthCallback,

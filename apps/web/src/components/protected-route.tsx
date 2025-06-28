@@ -6,12 +6,14 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const location = useLocation();
 
   if (loading) {
-    // You could show a loading spinner here
-    return <div>Loading...</div>;
+    return (
+      <div className="flex w-full h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
-    // Redirect to login page but save the current location they were trying to access
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

@@ -99,7 +99,7 @@ export class SupabaseAuthService implements AuthService {
   }
 
   async getCurrentUser(
-    accessToken: string
+    accessToken?: string
   ): Promise<LoginOutput['user'] | null> {
     // Set the auth token if provided
     if (accessToken) {

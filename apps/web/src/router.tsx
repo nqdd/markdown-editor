@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { RootLayout } from './layouts/root-layout.tsx';
 import { HomePage } from './pages/home.tsx';
 import { SettingsPage } from './pages/settings.tsx';
@@ -10,18 +10,9 @@ import { FolderPage } from './pages/folders/[id].tsx';
 import { LoginPage } from './pages/login.tsx';
 import { ProtectedRoute } from './components/protected-route.tsx';
 import { OAuthCallbackPage } from './pages/oauth-callback.tsx';
-import { AuthProvider } from './providers/auth-provider.tsx';
-
-// Create a wrapper component that provides auth context
-const AuthLayout = () => (
-  <AuthProvider>
-    <Outlet />
-  </AuthProvider>
-);
 
 export const router = createBrowserRouter([
   {
-    element: <AuthLayout />,
     children: [
       {
         path: '/login',
@@ -32,16 +23,20 @@ export const router = createBrowserRouter([
         element: <OAuthCallbackPage />,
       },
       {
+        path: '*',
+        element: <NotFoundPage />,
+      },
+      {
         path: '/',
-        element: <RootLayout />,
+        element: (
+          <ProtectedRoute>
+            <RootLayout />
+          </ProtectedRoute>
+        ),
         children: [
           {
             index: true,
-            element: (
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            ),
+            element: <HomePage />,
           },
           {
             path: 'documentation',
@@ -57,23 +52,11 @@ export const router = createBrowserRouter([
           },
           {
             path: 'settings',
-            element: (
-              <ProtectedRoute>
-                <SettingsPage />
-              </ProtectedRoute>
-            ),
+            element: <SettingsPage />,
           },
           {
             path: 'folders/:id',
-            element: (
-              <ProtectedRoute>
-                <FolderPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: '*',
-            element: <NotFoundPage />,
+            element: <FolderPage />,
           },
         ],
       },

@@ -8,12 +8,15 @@ import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@repo/ui';
 import { router } from './router.tsx';
 import { DependencyContainerProvider } from './providers/dependency-container.tsx';
+import { AuthProvider } from './providers/auth-provider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="system">
       <DependencyContainerProvider>
-        <RouterProvider router={router} />
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
       </DependencyContainerProvider>
     </ThemeProvider>
   </StrictMode>

@@ -27,25 +27,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         const mappedVaults = supabaseVaults.map((vault) => ({
           id: vault.id,
           name: vault.name,
-          logo: GalleryVerticalEnd, // Default logo
+          logo: GalleryVerticalEnd,
         }));
 
         setVaults(mappedVaults);
         setShowCreateVaultDialog(false);
       } else {
-        // No vaults exist, show create vault dialog
         setShowCreateVaultDialog(true);
       }
     } catch (error) {
       console.error('Error loading vaults:', error);
-      // Fallback to default vault on error
       setVaults([]);
     }
-  }, [getAllVaults]);
+  }, []);
 
   React.useEffect(() => {
     loadVaults();
-  }, [loadVaults]);
+  }, []);
 
   return (
     <>
