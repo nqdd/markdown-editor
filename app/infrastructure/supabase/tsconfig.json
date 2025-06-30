@@ -12,13 +12,13 @@
   "include": ["./src/*.ts", "./src/**/*.ts"],
   "references": [
     {
-      "path": "../domain"
+      "path": "../../domain"
     },
     {
-      "path": "../usecase"
+      "path": "../../usecase"
     },
     {
-      "path": "../../di"
+      "path": "../../../packages/di"
     }
   ]
 }

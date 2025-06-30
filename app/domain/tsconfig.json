@@ -5,17 +5,14 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
-      "@repo/usecase/*": ["./*"]
+      "@repo/domain/*": ["./*"]
     },
     "composite": true
   },
   "include": ["./src/*.ts", "./src/**/*.ts"],
   "references": [
     {
-      "path": "../domain"
-    },
-    {
-      "path": "../../di"
+      "path": "../../packages/di"
     }
   ]
 }

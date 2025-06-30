@@ -151,7 +151,7 @@ export function useAuth() {
   const logout = useCallback(async () => {
     if (authState.accessToken) {
       try {
-        await container.resolve(tAuthService).logout(authState.accessToken);
+        await container.resolve(tAuthService).logout();
       } catch (error) {
         console.error('Logout error:', error);
       }
