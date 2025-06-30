@@ -1,5 +1,4 @@
 import { useDependencyContainer } from './useDependencyContainer';
-import type { VaultEntity } from '@repo/domain/entities/vault.entity';
 import { tGetVaultListUseCase } from '@repo/usecase/vault/get-vault-list';
 import {
   tCreateVaultUseCase,
@@ -8,7 +7,6 @@ import {
 import { useAuthContext } from '../providers/auth-provider';
 import { useCallback } from 'react';
 
-export type Vault = VaultEntity;
 export type CreateVaultData = Omit<CreateVaultInput, 'userId'>;
 
 export function useVaultUseCases() {

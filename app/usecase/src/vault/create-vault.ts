@@ -5,6 +5,8 @@ import type { VaultRepository } from '@repo/domain/repositories/vault.repository
 import { tVaultRepository } from '@repo/domain/repositories/vault.repository';
 import z from 'zod';
 import { v4 as uuidv4 } from 'uuid';
+import { Vault } from './output';
+
 // Input schema for creating a vault
 export const createVaultInputSchema = z.object({
   name: z.string().min(1),
@@ -31,7 +33,7 @@ export class CreateVaultUseCase {
     this.vaultRepository = vaultRepository;
   }
 
-  async execute(input: CreateVaultInput): Promise<VaultEntity> {
+  async execute(input: CreateVaultInput): Promise<Vault> {
     const validatedInput = createVaultInputSchema.parse(input);
 
     const vault: VaultEntity = VaultEntity({

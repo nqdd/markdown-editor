@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { GalleryVerticalEnd } from '@repo/ui/icons';
 
 import {
   Sidebar,
@@ -12,25 +11,19 @@ import { VaultSwitcher } from './vault-switcher';
 import { NavUser } from './nav-user';
 import { useVaultUseCases } from '../hooks/useVaultUseCases';
 import { CreateVaultDialog } from './create-vault-dialog';
+import { Vault } from '@repo/usecase/vault/output';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { getAllVaults } = useVaultUseCases();
-  const [vaults, setVaults] = React.useState<any[]>([]);
+  const [vaults, setVaults] = React.useState<Vault[]>([]);
   const [showCreateVaultDialog, setShowCreateVaultDialog] =
     React.useState(false);
 
   const loadVaults = React.useCallback(async () => {
     try {
-      const supabaseVaults = await getAllVaults();
-
-      if (supabaseVaults.length > 0) {
-        const mappedVaults = supabaseVaults.map((vault) => ({
-          id: vault.id,
-          name: vault.name,
-          logo: GalleryVerticalEnd,
-        }));
-
-        setVaults(mappedVaults);
+      const vaults = await getAllVaults();
+      if (vaults.length > 0) {
+        setVaults(vaults);
         setShowCreateVaultDialog(false);
       } else {
         setShowCreateVaultDialog(true);

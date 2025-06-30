@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { ChevronsUpDown, Plus } from '@repo/ui/icons';
+import { ChevronsUpDown, GalleryVerticalEnd, Plus } from '@repo/ui/icons';
 
 import {
   DropdownMenu,
@@ -15,24 +14,23 @@ import {
   useSidebar,
 } from '@repo/ui';
 import { CreateVaultDialog } from './create-vault-dialog';
+import { Vault } from '@repo/usecase/vault/output';
+import { useState, useEffect } from 'react';
 
-export function VaultSwitcher({
-  vaults,
-  onVaultCreated,
-}: {
-  vaults: {
-    name: string;
-    logo: React.ElementType;
-  }[];
+type Props = {
+  vaults: Vault[];
   onVaultCreated?: () => void;
-}) {
-  const { isMobile } = useSidebar();
-  const [activeVault, setActiveVault] = React.useState(vaults[0]);
-  const [isCreateVaultOpen, setIsCreateVaultOpen] = React.useState(false);
+};
 
-  if (!activeVault) {
-    return null;
-  }
+export function VaultSwitcher({ vaults, onVaultCreated }: Props) {
+  const { isMobile } = useSidebar();
+  const [activeVault, setActiveVault] = useState(() => vaults?.[0] ?? null);
+  const [isCreateVaultOpen, setIsCreateVaultOpen] = useState(false);
+  useEffect(() => {
+    if (vaults.length > 0 && !activeVault) {
+      setActiveVault(vaults?.[0] ?? null);
+    }
+  }, [vaults, activeVault]);
 
   return (
     <>
@@ -45,11 +43,11 @@ export function VaultSwitcher({
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <activeVault.logo className="size-4" />
+                  <GalleryVerticalEnd />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {activeVault.name}
+                    {activeVault?.name}
                   </span>
                 </div>
                 <ChevronsUpDown className="ml-auto" />
@@ -71,7 +69,7 @@ export function VaultSwitcher({
                   className="gap-2 p-2"
                 >
                   <div className="flex size-6 items-center justify-center rounded-md border">
-                    <vault.logo className="size-3.5 shrink-0" />
+                    <GalleryVerticalEnd className="size-3.5 shrink-0" />
                   </div>
                   {vault.name}
                   <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
