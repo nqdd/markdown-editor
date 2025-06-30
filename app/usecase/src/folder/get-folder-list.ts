@@ -19,8 +19,12 @@ export const createGetFolderListUseCase: Factory<GetFolderListUseCase> = (
 export class GetFolderListUseCase {
   constructor(private folderRepository: FolderRepository) {}
 
-  async execute(userId: string): Promise<Folder[]> {
-    const folders = await this.folderRepository.getAllByUser(userId);
+  async execute(userId: string, vaultId: string): Promise<Folder[]> {
+    const folders = await this.folderRepository.getAllByUserAndVault(
+      userId,
+      vaultId
+    );
+
     return folderSchema.array().parse(folders);
   }
 }

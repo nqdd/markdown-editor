@@ -49,11 +49,15 @@ export class SupabaseFolderRepository implements FolderRepository {
     }
   }
 
-  async getAllByUser(userId: string): Promise<FolderEntity[]> {
+  async getAllByUserAndVault(
+    userId: string,
+    vaultId: string
+  ): Promise<FolderEntity[]> {
     const { data, error } = await this.supabaseClient
       .from('folders')
       .select('*')
       .eq('user_id', userId)
+      .eq('vault_id', vaultId)
       .order('name');
 
     if (error || !data) {

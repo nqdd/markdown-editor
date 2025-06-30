@@ -46,6 +46,10 @@ export class SupabaseVaultRepository implements VaultRepository {
     }
   }
 
+  getSelectedVault(): Promise<VaultEntity | null> {
+    throw new Error('Method not implemented.');
+  }
+
   async getAllByUser(userId: string): Promise<VaultEntity[]> {
     const { data, error } = await this.supabaseClient
       .from('vaults')

@@ -34,11 +34,14 @@ export function useFolderUseCases() {
       async (id: string) => getFolderUseCase.execute(id),
       [getFolderUseCase]
     ),
-    getAllFolders: useCallback(async () => {
-      if (!user?.id) {
-        throw new Error('User not logged in');
-      }
-      return getFolderListUseCase.execute(user?.id);
-    }, [user?.id, getFolderListUseCase]),
+    getAllFolders: useCallback(
+      async (vaultId: string) => {
+        if (!user?.id) {
+          throw new Error('User not logged in');
+        }
+        return getFolderListUseCase.execute(user?.id, vaultId);
+      },
+      [user?.id, getFolderListUseCase]
+    ),
   };
 }

@@ -149,7 +149,8 @@ export function NavFolder() {
   const loadFolders = async () => {
     try {
       setIsLoading(true);
-      const supabaseFolders = await getAllFolders();
+      // TODO: replace fake-id
+      const supabaseFolders = await getAllFolders('fake-id');
 
       // If we have folders from Supabase, merge them with the initial folders
       if (supabaseFolders.length > 0) {
