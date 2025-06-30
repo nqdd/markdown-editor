@@ -6,6 +6,8 @@ import {
   tFolderRepository,
 } from '@repo/domain/repositories/folder.repository';
 import { z } from 'zod';
+import { v4 as uuidv4 } from 'uuid';
+
 export const createFolderInputSchema = z.object({
   name: z.string().min(1),
   userId: z.string().uuid(),
@@ -32,7 +34,7 @@ export class CreateFolderUseCase {
     const validatedInput = createFolderInputSchema.parse(input);
 
     const folder: FolderEntity = FolderEntity({
-      id: 'dummy-id',
+      id: uuidv4(),
       name: validatedInput.name,
       userId: validatedInput.userId,
       parentId: validatedInput.parentId,
