@@ -1,4 +1,4 @@
-import { createToken } from '@repo/di/create-token';
+import { createToken } from '@repo/ioc/token';
 import z from 'zod';
 
 export const tAuthService = createToken<AuthService>('AUTH_SERVICE');

@@ -4,7 +4,7 @@ import {
 } from '@repo/domain/entities/folder.entity';
 import type { FolderRepository } from '@repo/domain/repositories/folder.repository';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { DependencyContainer } from '@repo/di/container';
+import { DependencyContainer } from '@repo/ioc/container';
 import { tSupabaseClient } from '../supabase-client';
 
 export const createSupabaseFolderRepository = (

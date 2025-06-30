@@ -18,7 +18,7 @@
       "path": "../../usecase"
     },
     {
-      "path": "../../../packages/di"
+      "path": "../../../packages/ioc"
     }
   ]
 }

@@ -1,5 +1,5 @@
-import { DependencyContainer } from '@repo/di/container';
-import { createToken } from '@repo/di/create-token';
+import { DependencyContainer } from '@repo/ioc/container';
+import { createToken } from '@repo/ioc/token';
 import {
   createClient as supabaseCreateClient,
   SupabaseClient,

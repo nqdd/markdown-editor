@@ -1,7 +1,7 @@
 import type { UserRepository } from '@repo/domain/repositories/user.repository';
 import { UserEntity, parseUserEntity } from '@repo/domain/entities/user.entity';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { DependencyContainer } from '@repo/di/container';
+import { DependencyContainer } from '@repo/ioc/container';
 import { tSupabaseClient } from '../supabase-client';
 
 export const createSupabaseUserRepository = (

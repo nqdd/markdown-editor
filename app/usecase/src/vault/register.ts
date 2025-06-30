@@ -1,4 +1,4 @@
-import { DependencyContainer } from '@repo/di/container';
+import { DependencyContainer } from '@repo/ioc/container';
 import {
   createGetVaultListUseCase,
   tGetVaultListUseCase,

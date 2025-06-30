@@ -1,4 +1,4 @@
-import { DependencyContainer } from '@repo/di/container';
+import { DependencyContainer } from '@repo/ioc/container';
 import { createSupabaseAuthService } from './services/supabase-auth.service';
 import { tAuthService } from '@repo/domain/services/auth.service';
 import { createSupabaseUserRepository } from './repositories/supabase-user.repository';

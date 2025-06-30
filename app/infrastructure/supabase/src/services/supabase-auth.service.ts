@@ -1,4 +1,4 @@
-import type { Factory } from '@repo/di/container';
+import type { Factory } from '@repo/ioc/container';
 import type {
   AuthService,
   LoginWithEmailPasswordInput,

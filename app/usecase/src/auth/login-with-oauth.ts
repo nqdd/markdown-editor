@@ -1,5 +1,5 @@
-import type { Factory } from '@repo/di/container';
-import { createToken } from '@repo/di/create-token';
+import type { Factory } from '@repo/ioc/container';
+import { createToken } from '@repo/ioc/token';
 import type {
   AuthService,
   LoginWithOAuthInput,

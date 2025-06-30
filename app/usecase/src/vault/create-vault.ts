@@ -1,5 +1,5 @@
-import type { Factory } from '@repo/di/container';
-import { createToken } from '@repo/di/create-token';
+import type { Factory } from '@repo/ioc/container';
+import { createToken } from '@repo/ioc/token';
 import { VaultEntity } from '@repo/domain/entities/vault.entity';
 import type { VaultRepository } from '@repo/domain/repositories/vault.repository';
 import { tVaultRepository } from '@repo/domain/repositories/vault.repository';

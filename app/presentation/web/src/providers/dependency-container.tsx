@@ -1,4 +1,4 @@
-import { DependencyContainer } from '@repo/di/container';
+import { DependencyContainer } from '@repo/ioc/container';
 import { registerInfrastructureSupabase } from '@repo/infrastructure-supabase/register';
 import { registerUseCases } from '@repo/usecase/register';
 import { createContext, type ReactNode, useMemo } from 'react';
@@ -6,7 +6,7 @@ import { createContext, type ReactNode, useMemo } from 'react';
 export const DependencyContainerContext =
   createContext<DependencyContainer | null>(null);
 
-var isDependencyInitialized = false;
+let isDependencyInitialized = false;
 
 export function DependencyContainerProvider({
   children,

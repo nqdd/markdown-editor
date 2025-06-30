@@ -1,4 +1,4 @@
-import { DependencyContainer } from '@repo/di/container';
+import { DependencyContainer } from '@repo/ioc/container';
 
 import {
   createLoginWithEmailPasswordUseCase,
@@ -26,7 +26,7 @@ export function registerUseCases(container: DependencyContainer): void {
 
   // Register folder use cases
   registerFolderUseCases(container);
-  
+
   // Register vault use cases
   registerVaultUseCases(container);
 }

@@ -8,8 +8,11 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "supabase:start": "supabase start",
+    "supabase:seed": "supabase db seed",
+    "supabase:seed:reset": "supabase db reset",
     "supabase:migration:new": "supabase migration new",
-    "supabase:migration:up": "supabase migration up"
+    "supabase:migration:up": "supabase migration up",
+    "supabase:migration:down": "supabase migration down"
   },
   "devDependencies": {
     "prettier": "^3.5.3",

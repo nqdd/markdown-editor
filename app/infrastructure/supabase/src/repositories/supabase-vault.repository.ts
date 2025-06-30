@@ -4,7 +4,7 @@ import {
 } from '@repo/domain/entities/vault.entity';
 import type { VaultRepository } from '@repo/domain/repositories/vault.repository';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { DependencyContainer } from '@repo/di/container';
+import { DependencyContainer } from '@repo/ioc/container';
 import { tSupabaseClient } from '../supabase-client';
 
 export const createSupabaseVaultRepository = (

@@ -22,7 +22,7 @@
     "typescript": "5.8.2"
   },
   "dependencies": {
-    "@repo/di": "*",
+    "@repo/ioc": "*",
     "@repo/domain": "*",
     "zod": "~3.25.67"
   }

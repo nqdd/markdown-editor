@@ -1,4 +1,4 @@
-import { createToken } from '@repo/di/create-token';
+import { createToken } from '@repo/ioc/token';
 import { FolderEntity } from '../entities/folder.entity';
 
 export const tFolderRepository =

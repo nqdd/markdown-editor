@@ -13,7 +13,7 @@
     "@blocknote/core": "^0.32.0",
     "@blocknote/react": "^0.32.0",
     "@blocknote/shadcn": "^0.32.0",
-    "@repo/di": "*",
+    "@repo/ioc": "*",
     "@repo/eslint-config": "*",
     "@repo/infrastructure-supabase": "*",
     "@repo/tailwind-config": "*",
