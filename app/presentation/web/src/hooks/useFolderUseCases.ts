@@ -3,13 +3,11 @@ import {
   type CreateFolderInput,
 } from '@repo/usecase/folder/create-folder';
 import { useDependencyContainer } from './useDependencyContainer';
-import type { FolderEntity } from '@repo/domain/entities/folder.entity';
 import { tGetFolderUseCase } from '@repo/usecase/folder/get-folder';
 import { tGetFolderListUseCase } from '@repo/usecase/folder/get-folder-list';
 import { useAuthContext } from '../providers/auth-provider';
 import { useCallback } from 'react';
 
-export type Folder = FolderEntity;
 export type CreateFolderData = Omit<CreateFolderInput, 'userId'>;
 
 export function useFolderUseCases() {

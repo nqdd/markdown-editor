@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FolderLayout } from '../layouts/folder-layout.tsx';
 import { MarkdownEditor } from '../components/markdown-editor.tsx';
-import { useFolderUseCases, type Folder } from '../hooks/useFolderUseCases.ts';
+import { useFolderUseCases } from '../hooks/useFolderUseCases.ts';
+import { Folder } from '@repo/usecase/folder/output';
 
 export function FolderPage() {
   const { id } = useParams<{ id: string }>();

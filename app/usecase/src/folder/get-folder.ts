@@ -1,10 +1,10 @@
 import type { Factory } from '@repo/ioc/container';
 import { createToken } from '@repo/ioc/token';
-import { FolderEntity } from '@repo/domain/entities/folder.entity';
 import {
   FolderRepository,
   tFolderRepository,
 } from '@repo/domain/repositories/folder.repository';
+import { Folder, folderSchema } from './output';
 export const tGetFolderUseCase = createToken<GetFolderUseCase>(
   'GET_FOLDER_USE_CASE'
 );
@@ -19,7 +19,8 @@ export const createGetFolderUseCase: Factory<GetFolderUseCase> = (
 export class GetFolderUseCase {
   constructor(private folderRepository: FolderRepository) {}
 
-  async execute(id: string): Promise<FolderEntity | null> {
-    return await this.folderRepository.getById(id);
+  async execute(id: string): Promise<Folder | null> {
+    const folder = await this.folderRepository.getById(id);
+    return folder ? folderSchema.parse(folder) : null;
   }
 }

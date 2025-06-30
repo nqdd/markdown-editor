@@ -7,11 +7,13 @@ import {
 } from '@repo/domain/repositories/folder.repository';
 import { z } from 'zod';
 import { v4 as uuidv4 } from 'uuid';
+import { Folder, folderSchema } from './output';
 
 export const createFolderInputSchema = z.object({
   name: z.string().min(1),
   userId: z.string().uuid(),
   parentId: z.string().uuid().optional(),
+  vaultId: z.string().uuid().optional(),
 });
 
 export type CreateFolderInput = z.infer<typeof createFolderInputSchema>;
@@ -30,7 +32,7 @@ export const createCreateFolderUseCase: Factory<CreateFolderUseCase> = (
 export class CreateFolderUseCase {
   constructor(private folderRepository: FolderRepository) {}
 
-  async execute(input: CreateFolderInput): Promise<FolderEntity> {
+  async execute(input: CreateFolderInput): Promise<Folder> {
     const validatedInput = createFolderInputSchema.parse(input);
 
     const folder: FolderEntity = FolderEntity({
@@ -38,12 +40,13 @@ export class CreateFolderUseCase {
       name: validatedInput.name,
       userId: validatedInput.userId,
       parentId: validatedInput.parentId,
+      vaultId: validatedInput.vaultId,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
 
     await this.folderRepository.create(folder);
 
-    return folder;
+    return folderSchema.parse(folder);
   }
 }

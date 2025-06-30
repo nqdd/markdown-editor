@@ -6,10 +6,13 @@ import {
   tFolderRepository,
 } from '@repo/domain/repositories/folder.repository';
 import { z } from 'zod';
+import { Folder, folderSchema } from './output';
+
 export const updateFolderInputSchema = z.object({
   id: z.string().uuid(),
   name: z.string().min(1).optional(),
   parentId: z.string().uuid().optional().nullable(),
+  vaultId: z.string().uuid().optional().nullable(),
 });
 
 export type UpdateFolderInput = z.infer<typeof updateFolderInputSchema>;
@@ -28,7 +31,7 @@ export const createUpdateFolderUseCase: Factory<UpdateFolderUseCase> = (
 export class UpdateFolderUseCase {
   constructor(private folderRepository: FolderRepository) {}
 
-  async execute(input: UpdateFolderInput): Promise<void> {
+  async execute(input: UpdateFolderInput): Promise<Folder> {
     const validatedInput = updateFolderInputSchema.parse(input);
 
     const existingFolder = await this.folderRepository.getById(
@@ -45,9 +48,15 @@ export class UpdateFolderUseCase {
         validatedInput.parentId !== undefined
           ? validatedInput.parentId || undefined
           : existingFolder.parentId,
+      vaultId:
+        validatedInput.vaultId !== undefined
+          ? validatedInput.vaultId || undefined
+          : existingFolder.vaultId,
       updatedAt: new Date(),
     };
 
     await this.folderRepository.update(updatedFolder);
+
+    return folderSchema.parse(updatedFolder);
   }
 }
