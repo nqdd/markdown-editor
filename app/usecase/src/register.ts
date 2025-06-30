@@ -10,10 +10,34 @@ import {
   tGetOAuthLoginUrlUseCase,
   tHandleOAuthCallbackUseCase,
 } from './auth/login-with-oauth';
-import { registerFolderUseCases } from './folder/register';
-import { registerVaultUseCases } from './vault/register';
+import {
+  createCreateFolderUseCase,
+  tCreateFolderUseCase,
+} from './folder/create-folder';
+import {
+  tDeleteFolderUseCase,
+  createDeleteFolderUseCase,
+} from './folder/delete-folder';
+import { tGetFolderUseCase, createGetFolderUseCase } from './folder/get-folder';
+import {
+  tGetFolderListUseCase,
+  createGetFolderListUseCase,
+} from './folder/get-folder-list';
+import {
+  tUpdateFolderUseCase,
+  createUpdateFolderUseCase,
+} from './folder/update-folder';
+import {
+  tCreateVaultUseCase,
+  createCreateVaultUseCase,
+} from './vault/create-vault';
+import {
+  tGetVaultListUseCase,
+  createGetVaultListUseCase,
+} from './vault/get-vault-list';
 
 export function registerUseCases(container: DependencyContainer): void {
+  // Register auth use cases
   container.register(
     tLoginWithEmailPasswordUseCase,
     createLoginWithEmailPasswordUseCase
@@ -25,8 +49,13 @@ export function registerUseCases(container: DependencyContainer): void {
   container.register(tGetOAuthLoginUrlUseCase, createGetOAuthLoginUrlUseCase);
 
   // Register folder use cases
-  registerFolderUseCases(container);
+  container.register(tCreateFolderUseCase, createCreateFolderUseCase);
+  container.register(tGetFolderUseCase, createGetFolderUseCase);
+  container.register(tGetFolderListUseCase, createGetFolderListUseCase);
+  container.register(tUpdateFolderUseCase, createUpdateFolderUseCase);
+  container.register(tDeleteFolderUseCase, createDeleteFolderUseCase);
 
   // Register vault use cases
-  registerVaultUseCases(container);
+  container.register(tGetVaultListUseCase, createGetVaultListUseCase);
+  container.register(tCreateVaultUseCase, createCreateVaultUseCase);
 }
