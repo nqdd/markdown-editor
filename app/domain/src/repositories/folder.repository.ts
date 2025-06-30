@@ -6,7 +6,10 @@ export const tFolderRepository =
 
 export interface FolderRepository {
   getById(id: string): Promise<FolderEntity | null>;
-  getAllByUser(userId: string): Promise<FolderEntity[]>;
+  getAllByUserAndVault(
+    userId: string,
+    vaultId: string
+  ): Promise<FolderEntity[]>;
   create(folder: FolderEntity): Promise<void>;
   update(folder: FolderEntity): Promise<void>;
   delete(id: string): Promise<void>;

@@ -1,0 +1,24 @@
+{
+  "extends": "@repo/typescript-config/base",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@repo/infrastructure-browser/*": ["./*"]
+    },
+    "composite": true
+  },
+  "include": ["./src/*.ts", "./src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../domain"
+    },
+    {
+      "path": "../../usecase"
+    },
+    {
+      "path": "../../../packages/ioc"
+    }
+  ]
+}

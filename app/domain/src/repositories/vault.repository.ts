@@ -6,6 +6,7 @@ export const tVaultRepository =
 
 export interface VaultRepository {
   getById(id: string): Promise<VaultEntity | null>;
+  getSelectedVault(): Promise<VaultEntity | null>;
   getAllByUser(userId: string): Promise<VaultEntity[]>;
   create(vault: VaultEntity): Promise<void>;
   update(vault: VaultEntity): Promise<void>;
