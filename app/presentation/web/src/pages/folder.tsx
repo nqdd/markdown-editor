@@ -18,8 +18,6 @@ export function FolderPage() {
       try {
         setLoading(true);
         setError(null);
-
-        // Get folder by ID using the folder use case
         const folder = await getFolderById(id);
         setFolder(folder);
       } catch (err) {
@@ -36,7 +34,7 @@ export function FolderPage() {
   if (loading) {
     return (
       <FolderLayout title="Loading...">
-        <div className="flex items-center justify-center h-full">
+        <div className="flex items-center justify-center w-full h-full">
           <p>Loading folder...</p>
         </div>
       </FolderLayout>

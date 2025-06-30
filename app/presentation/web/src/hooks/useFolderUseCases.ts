@@ -22,16 +22,25 @@ export function useFolderUseCases() {
   return {
     createFolder: useCallback(
       async (data: CreateFolderData) => {
+        if (!user?.id) {
+          throw new Error('User not logged in');
+        }
         return createFolderUseCase.execute({
           ...data,
-          userId: user?.id!,
+          userId: user.id,
         });
       },
-      [user?.id]
+      [user?.id, createFolderUseCase]
     ),
-    getFolderById: (id: string) => getFolderUseCase.execute(id),
+    getFolderById: useCallback(
+      async (id: string) => getFolderUseCase.execute(id),
+      [getFolderUseCase]
+    ),
     getAllFolders: useCallback(async () => {
-      return getFolderListUseCase.execute(user?.id!);
-    }, [user?.id]),
+      if (!user?.id) {
+        throw new Error('User not logged in');
+      }
+      return getFolderListUseCase.execute(user?.id);
+    }, [user?.id, getFolderListUseCase]),
   };
 }
