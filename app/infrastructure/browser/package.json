@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "@repo/domain": "*",
-    "@repo/ioc": "*"
+    "@repo/ioc": "*",
+    "tsyringe": "^4.8.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

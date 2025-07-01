@@ -4,22 +4,18 @@ import {
 } from '@repo/domain/entities/vault.entity';
 import type { VaultRepository } from '@repo/domain/repositories/vault.repository';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { DependencyContainer } from '@repo/ioc/container';
+import type { Factory } from '@repo/ioc/container';
+import { injectable, inject } from 'tsyringe';
 import { tSupabaseClient } from '../supabase-client';
 
-export const createSupabaseVaultRepository = (
-  container: DependencyContainer
-): VaultRepository => {
-  const client = container.resolve(tSupabaseClient);
-  return new SupabaseVaultRepository(client);
-};
+export const createSupabaseVaultRepository: Factory<VaultRepository> = (container) =>
+  container.resolve(SupabaseVaultRepository);
 
+@injectable()
 export class SupabaseVaultRepository implements VaultRepository {
-  private readonly supabaseClient: SupabaseClient;
-
-  constructor(supabaseClient: SupabaseClient) {
-    this.supabaseClient = supabaseClient;
-  }
+  constructor(
+    @inject(tSupabaseClient) private readonly supabaseClient: SupabaseClient
+  ) {}
 
   async getById(id: string): Promise<VaultEntity | null> {
     const { data, error } = await this.supabaseClient

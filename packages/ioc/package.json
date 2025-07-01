@@ -17,5 +17,8 @@
     "@repo/typescript-config": "*",
     "@repo/eslint-config": "*",
     "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "tsyringe": "^4.8.0"
   }
 }

@@ -4,22 +4,18 @@ import {
 } from '@repo/domain/entities/folder.entity';
 import type { FolderRepository } from '@repo/domain/repositories/folder.repository';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { DependencyContainer } from '@repo/ioc/container';
+import type { Factory } from '@repo/ioc/container';
+import { injectable, inject } from 'tsyringe';
 import { tSupabaseClient } from '../supabase-client';
 
-export const createSupabaseFolderRepository = (
-  container: DependencyContainer
-): FolderRepository => {
-  const client = container.resolve(tSupabaseClient);
-  return new SupabaseFolderRepository(client);
-};
+export const createSupabaseFolderRepository: Factory<FolderRepository> = (container) =>
+  container.resolve(SupabaseFolderRepository);
 
+@injectable()
 export class SupabaseFolderRepository implements FolderRepository {
-  private readonly supabaseClient: SupabaseClient;
-
-  constructor(supabaseClient: SupabaseClient) {
-    this.supabaseClient = supabaseClient;
-  }
+  constructor(
+    @inject(tSupabaseClient) private readonly supabaseClient: SupabaseClient
+  ) {}
 
   async getById(id: string): Promise<FolderEntity | null> {
     const { data, error } = await this.supabaseClient

@@ -1,5 +1,5 @@
-import { Token } from './container';
+import type { InjectionToken } from 'tsyringe';
 
-export const createToken = <T>(name: string): Token<T> => {
-  return Symbol(name) as Token<T>;
+export const createToken = <T>(name: string): InjectionToken<T> => {
+  return name as unknown as InjectionToken<T>;
 };

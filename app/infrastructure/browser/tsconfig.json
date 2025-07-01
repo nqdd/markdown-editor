@@ -7,7 +7,8 @@
     "paths": {
       "@repo/infrastructure-browser/*": ["./*"]
     },
-    "composite": true
+    "composite": true,
+    "experimentalDecorators": true
   },
   "include": ["./src/*.ts", "./src/**/*.ts"],
   "references": [

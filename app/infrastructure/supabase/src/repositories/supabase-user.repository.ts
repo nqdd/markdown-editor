@@ -1,22 +1,18 @@
 import type { UserRepository } from '@repo/domain/repositories/user.repository';
 import { UserEntity, parseUserEntity } from '@repo/domain/entities/user.entity';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { DependencyContainer } from '@repo/ioc/container';
+import type { Factory } from '@repo/ioc/container';
+import { injectable, inject } from 'tsyringe';
 import { tSupabaseClient } from '../supabase-client';
 
-export const createSupabaseUserRepository = (
-  container: DependencyContainer
-): UserRepository => {
-  const client = container.resolve(tSupabaseClient);
-  return new SupabaseUserRepository(client);
-};
+export const createSupabaseUserRepository: Factory<UserRepository> = (container) =>
+  container.resolve(SupabaseUserRepository);
 
+@injectable()
 export class SupabaseUserRepository implements UserRepository {
-  private readonly client: SupabaseClient;
-
-  constructor(client: SupabaseClient) {
-    this.client = client;
-  }
+  constructor(
+    @inject(tSupabaseClient) private readonly client: SupabaseClient
+  ) {}
 
   async getByEmail(email: string): Promise<UserEntity | null> {
     const { data, error } = await this.client

@@ -44,3 +44,17 @@ The application allows you to:
 - Delete folders
 
 All folder data is stored in Supabase.
+
+## Dependency Injection
+
+The application uses a simple wrapper around [tsyringe](https://github.com/microsoft/tsyringe) for dependency injection. You can resolve tokens normally or override the implementation when resolving:
+
+```ts
+const container = DependencyContainer.getInstance();
+
+// Resolve the default implementation
+const service = container.resolve(tSomeService);
+
+// Override with a custom class
+const custom = container.resolve(tSomeService, { useClass: CustomService });
+```

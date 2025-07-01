@@ -25,6 +25,7 @@
     "zod": "~3.25.67",
     "@repo/ioc": "*",
     "@repo/domain": "*",
-    "@supabase/supabase-js": "^2.50.2"
+    "@supabase/supabase-js": "^2.50.2",
+    "tsyringe": "^4.8.0"
   }
 }

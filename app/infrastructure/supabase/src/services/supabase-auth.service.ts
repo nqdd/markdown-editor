@@ -7,21 +7,18 @@ import type {
   OAuthProvider,
 } from '@repo/domain/services/auth.service';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { injectable, inject } from 'tsyringe';
 import { tAuthRedirectUrl, tSupabaseClient } from '../supabase-client';
-export const createSupabaseAuthService: Factory<AuthService> = (container) => {
-  const client = container.resolve(tSupabaseClient);
-  const redirectUrl = container.resolve(tAuthRedirectUrl);
-  return new SupabaseAuthService(client, redirectUrl);
-};
 
+export const createSupabaseAuthService: Factory<AuthService> = (container) =>
+  container.resolve(SupabaseAuthService);
+
+@injectable()
 export class SupabaseAuthService implements AuthService {
-  private readonly client: SupabaseClient;
-  private readonly redirectUrl: string;
-
-  constructor(client: SupabaseClient, redirectUrl: string) {
-    this.redirectUrl = redirectUrl;
-    this.client = client;
-  }
+  constructor(
+    @inject(tSupabaseClient) private readonly client: SupabaseClient,
+    @inject(tAuthRedirectUrl) private readonly redirectUrl: string
+  ) {}
 
   async loginWithEmailPassword(
     input: LoginWithEmailPasswordInput

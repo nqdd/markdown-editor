@@ -1,6 +1,8 @@
 import { VaultEntity } from '@repo/domain/entities/vault.entity';
 import { VaultRepository } from '@repo/domain/repositories/vault.repository';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export class BrowserVaultRepository implements VaultRepository {
   getById(_id: string): Promise<VaultEntity | null> {
     throw new Error('Method not implemented.');

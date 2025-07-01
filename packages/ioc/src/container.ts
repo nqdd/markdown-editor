@@ -1,14 +1,27 @@
+import {
+  container as globalContainer,
+  Lifecycle,
+  type DependencyContainer as TsyringeContainer,
+  type InjectionToken,
+} from 'tsyringe';
+
+export type Token<T> = InjectionToken<T>;
+
 export type Factory<T> = (container: DependencyContainer) => T;
 
-export type Token<T> = symbol & { __type: T };
+export interface ResolveOptions<T> {
+  useClass?: new (...args: any[]) => T;
+  useFactory?: Factory<T>;
+  useValue?: T;
+}
 
 export class DependencyContainer {
   private static instance: DependencyContainer;
+  private readonly container: TsyringeContainer;
 
-  private factories: Map<Token<unknown>, Factory<unknown>> = new Map();
-  private instances: Map<Factory<unknown>, unknown> = new Map();
-
-  private constructor() {}
+  private constructor(container: TsyringeContainer = globalContainer.createChildContainer()) {
+    this.container = container;
+  }
 
   public static getInstance(): DependencyContainer {
     if (!DependencyContainer.instance) {
@@ -17,26 +30,38 @@ export class DependencyContainer {
     return DependencyContainer.instance;
   }
 
-  public register<T>(token: Token<T>, factory: Factory<T>): void {
-    this.factories.set(token, factory);
-    this.instances.set(factory, undefined);
+  private createChild(): DependencyContainer {
+    return new DependencyContainer(this.container.createChildContainer());
   }
 
-  public resolve<T>(token: Token<T>): T {
-    const factory = this.factories.get(token) as Factory<T>;
+  public register<T>(token: Token<T>, factory: Factory<T>): void {
+    this.container.register<T>(token, {
+      useFactory: () => factory(this),
+      lifecycle: Lifecycle.Singleton,
+    });
+  }
 
-    if (!factory) {
-      throw new Error(`Token ${String(token)} not found`);
+  public resolve<T>(token: Token<T>, options?: ResolveOptions<T>): T {
+    if (!options) {
+      return this.container.resolve<T>(token);
     }
 
-    const instance = this.instances.get(factory) as T | undefined;
+    const child = this.createChild();
 
-    if (instance !== undefined) {
-      return instance;
+    if (options.useClass) {
+      child.container.register<T>(token, {
+        useClass: options.useClass,
+        lifecycle: Lifecycle.Singleton,
+      });
+    } else if (options.useFactory) {
+      child.container.register<T>(token, {
+        useFactory: () => options.useFactory(child),
+        lifecycle: Lifecycle.Singleton,
+      });
+    } else if (options.useValue !== undefined) {
+      child.container.registerInstance<T>(token, options.useValue);
     }
 
-    const newInstance = factory(this);
-    this.instances.set(factory, newInstance);
-    return newInstance;
+    return child.container.resolve<T>(token);
   }
 }
