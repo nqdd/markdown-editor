@@ -17,17 +17,24 @@ export function useVaultUseCases() {
 
   return {
     getAllVaults: useCallback(async () => {
-      return getVaultListUseCase.execute(user?.id!);
-    }, [user?.id]),
+      const userId = user?.id;
+      if (!userId) {
+        throw new Error('User not logged in');
+      }
+      return getVaultListUseCase.execute(userId);
+    }, [getVaultListUseCase, user?.id]),
     createVault: useCallback(
       async (data: CreateVaultData) => {
-        const userId = user?.id!;
+        const userId = user?.id;
+        if (!userId) {
+          throw new Error('User not logged in');
+        }
         return createVaultUseCase.execute({
           ...data,
           userId,
         });
       },
-      [user?.id]
+      [createVaultUseCase, user?.id]
     ),
   };
 }

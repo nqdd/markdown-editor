@@ -64,7 +64,7 @@ export function useAuth() {
     };
 
     checkAuth();
-  }, []);
+  }, [container]);
 
   const login = useCallback(
     async (email: string, password: string) => {

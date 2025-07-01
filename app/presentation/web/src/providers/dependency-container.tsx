@@ -3,6 +3,7 @@ import { registerInfrastructureSupabase } from '@repo/infrastructure-supabase/re
 import { registerUseCases } from '@repo/usecase/register';
 import { createContext, type ReactNode, useMemo } from 'react';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const DependencyContainerContext =
   createContext<DependencyContainer | null>(null);
 

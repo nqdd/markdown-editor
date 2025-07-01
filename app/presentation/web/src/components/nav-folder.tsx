@@ -175,6 +175,7 @@ export function NavFolder() {
 
   useEffect(() => {
     loadFolders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

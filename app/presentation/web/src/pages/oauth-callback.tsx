@@ -19,9 +19,16 @@ export function OAuthCallbackPage() {
 
       try {
         // Cast provider to OAuthProvider type
-        await handleOAuthCallback(provider as any, code);
+        await handleOAuthCallback(
+          provider as 'google' | 'apple' | 'github',
+          code
+        );
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to complete authentication');
+        setError(
+          err instanceof Error
+            ? err.message
+            : 'Failed to complete authentication'
+        );
       }
     };
 
@@ -32,7 +39,9 @@ export function OAuthCallbackPage() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="w-full max-w-md space-y-4 rounded-lg border p-8 shadow-md">
-          <h1 className="text-2xl font-bold text-destructive">Authentication Error</h1>
+          <h1 className="text-2xl font-bold text-destructive">
+            Authentication Error
+          </h1>
           <p>{error}</p>
         </div>
       </div>

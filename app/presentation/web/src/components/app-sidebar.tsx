@@ -32,11 +32,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       console.error('Error loading vaults:', error);
       setVaults([]);
     }
-  }, []);
+  }, [getAllVaults]);
 
   React.useEffect(() => {
     loadVaults();
-  }, []);
+  }, [loadVaults]);
 
   return (
     <>
