@@ -17,7 +17,4 @@ export class BrowserVaultRepository implements VaultRepository {
   delete(_id: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  getSelectedVault(): Promise<VaultEntity | null> {
-    throw new Error('Method not implemented.');
-  }
 }
