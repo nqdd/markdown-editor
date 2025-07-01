@@ -1,4 +1,4 @@
-import { createToken } from '@repo/ioc/token';
+import { createToken } from '@repo/ioc/container';
 
 export const tPageRepository = createToken<PageRepository>('PAGE_REPOSITORY');
 

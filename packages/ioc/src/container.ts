@@ -2,6 +2,10 @@ export type Factory<T> = (container: DependencyContainer) => T;
 
 export type Token<T> = symbol & { __type: T };
 
+export const createToken = <T>(name: string): Token<T> => {
+  return Symbol(name) as Token<T>;
+};
+
 export class DependencyContainer {
   private static instance: DependencyContainer;
 

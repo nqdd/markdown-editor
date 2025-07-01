@@ -1,4 +1,4 @@
-import { createToken } from '@repo/ioc/token';
+import { createToken } from '@repo/ioc/container';
 import { VaultEntity } from '../entities/vault.entity';
 
 export const tVaultRepository =

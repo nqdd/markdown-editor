@@ -1,5 +1,5 @@
 import type { Factory } from '@repo/ioc/container';
-import { createToken } from '@repo/ioc/token';
+import { createToken } from '@repo/ioc/container';
 import { FolderEntity } from '@repo/domain/entities/folder.entity';
 import {
   FolderRepository,
