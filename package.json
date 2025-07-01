@@ -12,9 +12,11 @@
     "supabase:seed:reset": "supabase db reset",
     "supabase:migration:new": "supabase migration new",
     "supabase:migration:up": "supabase migration up",
-    "supabase:migration:down": "supabase migration down"
+    "supabase:migration:down": "supabase migration down",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "prettier": "^3.5.3",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
