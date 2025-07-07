@@ -4,8 +4,7 @@ import { Button, Input, Label } from '@repo/ui';
 import { Navigate } from 'react-router-dom';
 
 export function LoginPage() {
-  const { login, loginWithOAuth, error, loading, isAuthenticated } =
-    useAuthContext();
+  const { login, error, loading, isAuthenticated } = useAuthContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -82,12 +81,7 @@ export function LoginPage() {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <Button
-            variant="outline"
-            type="button"
-            onClick={() => loginWithOAuth('github')}
-            disabled={loading}
-          >
+          <Button variant="outline" type="button" disabled={loading}>
             GitHub
           </Button>
         </div>

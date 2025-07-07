@@ -5,13 +5,13 @@ import {
 import type { FolderRepository } from '@repo/domain/repositories/folder.repository';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { DependencyContainer } from '@repo/ioc/container';
-import { tSupabaseClient } from '../supabase-client';
+import { tSupabaseService } from '../services/supabase.service';
 
 export const createSupabaseFolderRepository = (
   container: DependencyContainer
 ): FolderRepository => {
-  const client = container.resolve(tSupabaseClient);
-  return new SupabaseFolderRepository(client);
+  const supabase = container.resolve(tSupabaseService);
+  return new SupabaseFolderRepository(supabase.client);
 };
 
 export class SupabaseFolderRepository implements FolderRepository {

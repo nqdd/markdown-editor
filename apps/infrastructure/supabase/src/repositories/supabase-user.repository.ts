@@ -2,13 +2,13 @@ import type { UserRepository } from '@repo/domain/repositories/user.repository';
 import { UserEntity, parseUserEntity } from '@repo/domain/entities/user.entity';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { DependencyContainer } from '@repo/ioc/container';
-import { tSupabaseClient } from '../supabase-client';
+import { tSupabaseService } from '../services/supabase.service';
 
 export const createSupabaseUserRepository = (
   container: DependencyContainer
 ): UserRepository => {
-  const client = container.resolve(tSupabaseClient);
-  return new SupabaseUserRepository(client);
+  const supabase = container.resolve(tSupabaseService);
+  return new SupabaseUserRepository(supabase.client);
 };
 
 export class SupabaseUserRepository implements UserRepository {

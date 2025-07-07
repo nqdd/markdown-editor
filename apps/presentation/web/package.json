@@ -17,6 +17,7 @@
     "@repo/ioc": "*",
     "@repo/eslint-config": "*",
     "@repo/infrastructure-supabase": "*",
+    "@repo/infrastructure-firebase": "*",
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
     "@repo/ui": "*",
@@ -41,7 +42,7 @@
     "postcss": "^8.5.6",
     "supabase": "^2.26.9",
     "tailwindcss": "^4.1.10",
-    "typescript": "~5.8.3",
+    "typescript": "5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0"
   }

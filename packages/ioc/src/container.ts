@@ -43,4 +43,8 @@ export class DependencyContainer {
     this.instances.set(factory, newInstance);
     return newInstance;
   }
+
+  public has(token: Token<unknown>): boolean {
+    return this.factories.has(token);
+  }
 }

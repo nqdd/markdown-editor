@@ -5,7 +5,6 @@ import { NotFoundPage } from './pages/not-found.tsx';
 import { FolderPage } from './pages/folder.tsx';
 import { LoginPage } from './pages/login.tsx';
 import { ProtectedRoute } from './components/protected-route.tsx';
-import { OAuthCallbackPage } from './pages/oauth-callback.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -31,10 +30,6 @@ export const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />,
-      },
-      {
-        path: '/oauth/callback',
-        element: <OAuthCallbackPage />,
       },
       {
         path: '*',

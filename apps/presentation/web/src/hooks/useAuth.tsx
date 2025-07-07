@@ -1,14 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDependencyContainer } from './useDependencyContainer';
 import { tLoginWithEmailPasswordUseCase } from '@repo/usecase/auth/login-with-email-password';
-import {
-  tGetOAuthLoginUrlUseCase,
-  tHandleOAuthCallbackUseCase,
-} from '@repo/usecase/auth/login-with-oauth';
-import {
-  tAuthService,
-  type OAuthProvider,
-} from '@repo/domain/services/auth.service';
+import { tAuthService } from '@repo/domain/services/auth.service';
 
 type User = {
   id: string;
@@ -28,10 +21,6 @@ export function useAuth() {
   const container = useDependencyContainer();
   const loginWithEmailPasswordUseCase = container.resolve(
     tLoginWithEmailPasswordUseCase
-  );
-  const getOAuthLoginUrlUseCase = container.resolve(tGetOAuthLoginUrlUseCase);
-  const handleOAuthCallbackUseCase = container.resolve(
-    tHandleOAuthCallbackUseCase
   );
 
   const [authState, setAuthState] = useState<AuthState>({
@@ -96,58 +85,6 @@ export function useAuth() {
     [loginWithEmailPasswordUseCase]
   );
 
-  const loginWithOAuth = useCallback(
-    async (provider: OAuthProvider) => {
-      setAuthState((prev) => ({ ...prev, loading: true, error: null }));
-
-      try {
-        const url = await getOAuthLoginUrlUseCase.execute({ provider });
-        window.location.href = url;
-      } catch (error) {
-        setAuthState((prev) => ({
-          ...prev,
-          loading: false,
-          error:
-            error instanceof Error
-              ? error.message
-              : `Failed to login with ${provider}`,
-        }));
-        throw error;
-      }
-    },
-    [getOAuthLoginUrlUseCase]
-  );
-
-  const handleOAuthCallback = useCallback(
-    async (provider: OAuthProvider, code: string) => {
-      setAuthState((prev) => ({ ...prev, loading: true, error: null }));
-
-      try {
-        const result = await handleOAuthCallbackUseCase.execute(provider, code);
-
-        setAuthState({
-          user: result.user,
-          accessToken: result.accessToken,
-          loading: false,
-          error: null,
-        });
-
-        return result;
-      } catch (error) {
-        setAuthState((prev) => ({
-          ...prev,
-          loading: false,
-          error:
-            error instanceof Error
-              ? error.message
-              : 'Failed to complete OAuth login',
-        }));
-        throw error;
-      }
-    },
-    [handleOAuthCallbackUseCase]
-  );
-
   const logout = useCallback(async () => {
     if (authState.accessToken) {
       try {
@@ -172,8 +109,6 @@ export function useAuth() {
     error: authState.error,
     isAuthenticated: Boolean(authState.user?.id),
     login,
-    loginWithOAuth,
-    handleOAuthCallback,
     logout,
   };
 }

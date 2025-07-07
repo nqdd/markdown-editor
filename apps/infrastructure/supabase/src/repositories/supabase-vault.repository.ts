@@ -5,13 +5,13 @@ import {
 import type { VaultRepository } from '@repo/domain/repositories/vault.repository';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { DependencyContainer } from '@repo/ioc/container';
-import { tSupabaseClient } from '../supabase-client';
+import { tSupabaseService } from '../services/supabase.service';
 
 export const createSupabaseVaultRepository = (
   container: DependencyContainer
 ): VaultRepository => {
-  const client = container.resolve(tSupabaseClient);
-  return new SupabaseVaultRepository(client);
+  const supabase = container.resolve(tSupabaseService);
+  return new SupabaseVaultRepository(supabase.client);
 };
 
 export class SupabaseVaultRepository implements VaultRepository {

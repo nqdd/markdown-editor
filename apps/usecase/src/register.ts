@@ -1,15 +1,9 @@
-import { DependencyContainer } from '@repo/ioc/container';
+import { createToken, DependencyContainer } from '@repo/ioc/container';
 
 import {
   createLoginWithEmailPasswordUseCase,
   tLoginWithEmailPasswordUseCase,
 } from './auth/login-with-email-password';
-import {
-  createGetOAuthLoginUrlUseCase,
-  createHandleOAuthCallbackUseCase,
-  tGetOAuthLoginUrlUseCase,
-  tHandleOAuthCallbackUseCase,
-} from './auth/login-with-oauth';
 import {
   createCreateFolderUseCase,
   tCreateFolderUseCase,
@@ -36,17 +30,21 @@ import {
   createGetVaultListUseCase,
 } from './vault/get-vault-list';
 
+const initializeUseCasesToken = createToken('INITIALIZE_USE_CASES');
+
 export function registerUseCases(container: DependencyContainer): void {
+  if (container.has(initializeUseCasesToken)) {
+    return;
+  }
+
+  container.register(initializeUseCasesToken, () => true);
+  container.resolve(initializeUseCasesToken);
+
   // Register auth use cases
   container.register(
     tLoginWithEmailPasswordUseCase,
     createLoginWithEmailPasswordUseCase
   );
-  container.register(
-    tHandleOAuthCallbackUseCase,
-    createHandleOAuthCallbackUseCase
-  );
-  container.register(tGetOAuthLoginUrlUseCase, createGetOAuthLoginUrlUseCase);
 
   // Register folder use cases
   container.register(tCreateFolderUseCase, createCreateFolderUseCase);

@@ -1,5 +1,5 @@
 {
-  "name": "@repo/infrastructure-supabase",
+  "name": "@repo/infrastructure-firebase",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -26,6 +26,7 @@
     "zod": "~3.25.67",
     "@repo/ioc": "*",
     "@repo/domain": "*",
-    "@supabase/supabase-js": "^2.50.2"
+    "firebase": "^10.14.1",
+    "firebase-admin": "^12.7.0"
   }
 }

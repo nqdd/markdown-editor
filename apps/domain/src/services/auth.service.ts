@@ -27,7 +27,7 @@ export type LoginWithOAuthInput = z.infer<typeof loginWithOAuthInputSchema>;
 export const loginOutputSchema = z.object({
   accessToken: z.string(),
   user: z.object({
-    id: z.string().uuid(),
+    id: z.string(),
     email: z.string().email(),
     name: z.string().optional(),
     avatar: z.string().url().optional(),
@@ -39,11 +39,6 @@ export type LoginOutput = z.infer<typeof loginOutputSchema>;
 export interface AuthService {
   loginWithEmailPassword(
     input: LoginWithEmailPasswordInput
-  ): Promise<LoginOutput>;
-  getOAuthLoginUrl(input: LoginWithOAuthInput): Promise<string>;
-  handleOAuthCallback(
-    provider: OAuthProvider,
-    code: string
   ): Promise<LoginOutput>;
   logout(): Promise<void>;
   getCurrentUser(): Promise<LoginOutput['user'] | null>;
