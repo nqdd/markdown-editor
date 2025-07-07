@@ -1,0 +1,23 @@
+{
+  "name": "supabase-local",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "supabase start",
+    "supabase": "supabase",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:seed": "supabase db seed",
+    "supabase:seed:reset": "supabase db reset",
+    "supabase:migration:new": "supabase migration new",
+    "supabase:migration:up": "supabase migration up",
+    "supabase:migration:down": "supabase migration down"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "supabase": "^2.30.4"
+  }
+}

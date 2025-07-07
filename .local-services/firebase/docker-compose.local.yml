@@ -1,0 +1,27 @@
+services:
+  firebase-emulator:
+    build:
+      context: .
+      dockerfile: dockerfile.firebase.local
+    working_dir: /workspace
+    # mount your project into the container
+    volumes:
+      - ./:/workspace:cached
+      - ./data:/workspace/data
+    # expose emulator ports
+    ports:
+      # Emulator UI
+      - '4000:4000'
+      # Firestore emulator
+      - '8080:8080'
+      # Realtime Database emulator
+      - '9000:9000'
+      # Auth emulator
+      - '9099:9099'
+      # Functions emulator
+      - '5001:5001'
+      # Pub/Sub emulator (if you use it)
+      - '8085:8085'
+    environment:
+      # override with your real project ID, or set via .env
+      - FIREBASE_PROJECT_ID=score-deck
